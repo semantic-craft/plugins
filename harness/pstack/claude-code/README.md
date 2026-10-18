@@ -29,6 +29,14 @@ claude code prefixes plugin commands and agents, so `/poteto-mode` is `/pstack:p
 
 claude code installs a generated copy of pstack, including this readme and the guide, from [`harness/pstack/`](https://github.com/cursor/plugins/tree/main/harness/pstack) at the repository root. after you change pstack, run `node scripts/generate-pstack-harness-trees.mjs` from the repository root and commit the result. ci fails while the generated copy is out of date.
 
+in deepseek harness:
+
+```bash
+dsh plugin --profile <profile> add 'git+https://github.com/semantic-craft/plugins.git#<commit>&path:/harness/pstack/dsh'
+```
+
+deepseek harness does not prefix plugin commands, so `/poteto-mode` stays `/poteto-mode`. the [deepseek harness adapter](https://github.com/cursor/plugins/blob/main/pstack/docs/harness/dsh.md) maps every other cursor name. pstack installs as an ordinary bundle, either from the fork pinned to a commit or with `link:` and the absolute path to `harness/pstack/dsh` in a local clone. deepseek harness has no per-role model rule, so `/setup-pstack` reports the models it detects and says role pinning is unavailable, and a step that needs a cursor-only feature, such as bugbot or automations, is skipped with a one-line note.
+
 ## get started
 
 two steps:
