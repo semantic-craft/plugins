@@ -1,3 +1,31 @@
+# pstack for DeepSeek Harness
+
+This fork maintains the DSH adapter for [pstack](https://github.com/cursor/plugins/tree/main/pstack).
+Start with the [DSH installation and usage guide](harness/pstack/dsh/README.md).
+
+| Task | Location |
+| --- | --- |
+| Install or use the DSH plugin | [`harness/pstack/dsh/`](harness/pstack/dsh/) |
+| Change skill content | [`pstack/skills/`](pstack/skills/) |
+| Change the DSH adapter or packaging | [`scripts/pstack-dsh/`](scripts/pstack-dsh/), [`pstack/docs/harness/dsh.md`](pstack/docs/harness/dsh.md) |
+| Regenerate and check the packages | [`scripts/generate-pstack-harness-trees.mjs`](scripts/generate-pstack-harness-trees.mjs) |
+
+The source and generated package belong to one plugin. Keep both so the package can be rebuilt.
+The docs checker also reads `cursor-team-kit/skills/deslop/` to resolve an upstream cross-plugin reference; keeping that source does not install or enable another plugin.
+For a focused local checkout, `git sparse-checkout set pstack scripts harness cursor-team-kit/skills/deslop` hides unrelated upstream plugins; Git retains their history.
+
+Validation from the repository root:
+
+```sh
+node scripts/generate-pstack-harness-trees.mjs --check
+node scripts/check-pstack-docs.mjs
+node --test harness/pstack/dsh/test/plugin.test.js
+```
+
+The upstream catalog below describes the complete repository, including directories hidden by a focused checkout.
+
+---
+
 # Cursor plugins
 
 Official Cursor plugins for popular developer tools, frameworks, and SaaS products. Each plugin is a standalone directory at the repository root with its own `.cursor-plugin/plugin.json` manifest.
