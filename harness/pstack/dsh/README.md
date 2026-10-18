@@ -88,9 +88,10 @@ loads the Markdown and pastes it into the task prompt for `subagent` /
 
 **No model pinning.** DeepSeek Harness has no `~/.claude/rules/` equivalent, so
 `/setup-pstack` does not write a model-rules file and does not pin pstack's
-default models. It reports the models the session can reach (via `list_models`)
-and leaves selection to the harness. Skills that name a model in their Cursor
-form default to the session's own model.
+default models. It reports the models the session can reach (via `list_subagent_models`,
+only when the deployment mounts model selection) and leaves selection to the
+harness. Skills that name a model in its Cursor form default to the session's
+own model unless the deployment turns on per-subagent model selection.
 
 ## Layout
 

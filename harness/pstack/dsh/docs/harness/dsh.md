@@ -39,17 +39,17 @@ pstack skills use Cursor names. In DeepSeek Harness, read this file once per ses
 | A `grok-*` slug such as `grok-4.7-xhigh-fast`, or a `gpt-*` slug such as `gpt-4o` | Omit the model, run on the session model, and say so. |
 | `auto` or `inherit-parent` | Omit the model. That is already what DeepSeek Harness does. |
 | The `pstack-models.mdc` rule, `~/.cursor/rules/pstack-models.mdc` | No equivalent. DeepSeek Harness loads `AGENTS.md` project instructions, not a per-skill rules directory, and the default delegation tool exposes no per-role model field. Ignore the role line and run on the session model. |
-| `list_models` (deployments name it `list_subagent_models`) | Run it to inspect which subagent routes the deployment advertises. It only lists routes. It does not pin a model for a child. |
+| `list_subagent_models` when the deployment mounts model selection (some deployments rename it `list_models`) | Run it to inspect which subagent routes the deployment advertises. It only lists routes. It does not pin a model for a child. |
 
-Some deployments enable model selection, which adds optional `provider`, `model`, and `reasoning_effort` fields to `subagent`. Only then may you pin a route, and prefer one that `list_models` reports. `subagent_fork` always keeps its fixed route.
+Some deployments enable model selection, which adds optional `provider`, `model`, and `reasoning_effort` fields to `subagent`. Only then may you pin a route, and prefer one that `list_subagent_models` reports. `subagent_fork` always keeps its fixed route.
 
 ## setup-pstack
 
 Follow the skill with these changes:
 
-- Detect. Run `list_models` (or `list_subagent_models`) and collect the exact subagent routes it reports. If it fails or prints nothing, ask the user to paste the routes they use, otherwise report the session model. Never write a route you have not confirmed.
+- Detect. Run `list_subagent_models` when the deployment mounts model selection (some deployments rename it `list_models`) and collect the exact subagent routes it reports. If it fails or prints nothing, ask the user to paste the routes they use, otherwise report the session model. Never write a route you have not confirmed.
 - Map. For showing the table, keep each default slug such as `claude-opus-5-5-xhigh`, `grok-4.7-xhigh-fast`, or `inherit-parent` as a label. Do not treat it as a value the delegation tool accepts.
-- Write. Do not write `~/.claude/rules/` or `.cursor/rules/`, and do not write `AGENTS.md`. DeepSeek Harness has no rule file that pins a model per role. Report the detected routes, name each role's configured value, and say plainly that role pinning is unavailable in DeepSeek Harness, so every skill and subagent runs on the session model. Then stop. Do not rewrite a rule on a re-run, because there is none.
+- Write. Do not write `~/.claude/rules/` or `.cursor/rules/`, and do not write `AGENTS.md`. DeepSeek Harness has no rule file that pins a model per role. Report the detected routes, name each role's configured value, and say plainly that pstack's role pinning is unavailable in DeepSeek Harness, so each skill and subagent runs on the session model unless this deployment turns on the opt-in model-selection fields. Then stop. Do not rewrite a rule on a re-run, because there is none.
 - Stop. Skip the optional verification-skill step unless the user asks for it. If they do, read `<bundle>/skills/create-verification-skill/SKILL.md` and follow it.
 
 ## Paths
@@ -60,7 +60,7 @@ Follow the skill with these changes:
 | `~/.cursor/plugins/`, `.cursor-plugin/plugin.json` | A DeepSeek Harness bundle: a package whose `package.json` declares `dsh.bundle.patch` pointing at a `cordis.patch.yml`, whose inserted row mounts an entry module that registers the copied skills on `ctx.skills`. The bundle installs under `$DSH_HOME/profiles/<profile>/node_modules/dsh-pstack-plugin/`, so that directory is `<bundle>`. |
 | `.cursor/rules/*.mdc`, always-applied rules | `AGENTS.md`, or `CLAUDE.md`. DeepSeek Harness loads the project instruction chain from the project root down to the working directory, plus `$DSH_HOME/AGENTS.md`. It never reads `.mdc` files, and the model rule has no equivalent. See Models. |
 | `https://github.com/cursor/plugins/blob/main/pstack/<path>` | `<bundle>/<path>` when that file exists. The bundle ships `skills/`, `agents/`, `docs/guide/`, `docs/harness/dsh.md`, `README.md`, and `LICENSE`. Read the local copy and never fetch it. Give the user the URL when they need a link. |
-| Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/` | `session_search` and `session_event_search` for prior sessions in this workspace, `session_trace` for lineage, and `read_own_chat` for this chat's earlier parts when the client exposes it. The session tools authorize per workspace already, so never read another workspace's chats. |
+| Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/` | `session_search` and `session_event_search` (when the deployment mounts the experimental session-search bundle) for prior sessions in this workspace, `session_trace` for lineage, and `read_own_chat` for this chat's earlier parts when the client exposes it. The session tools authorize per workspace already, so never read another workspace's chats. |
 
 ## Cursor-only features
 
