@@ -1,0 +1,7 @@
+# Bundle patch for dsh-pstack-plugin: mounted when this package is selected as a
+# dsh bundle. It inserts exactly one row — this package's own entry module —
+# which registers the bundled pstack skills on the skill registry and adds
+# nothing else.
+- insert:
+    - id: dsh-pstack
+      name: dsh-pstack-plugin

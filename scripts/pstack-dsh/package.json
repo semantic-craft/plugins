@@ -1,0 +1,35 @@
+{
+  "name": "dsh-pstack-plugin",
+  "version": "__VERSION__",
+  "description": "DeepSeek Harness bundle for pstack: rigorous agent workflows, principles, and playbooks, registered as user-invocable skills.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/plugin.js",
+  "exports": {
+    ".": "./src/plugin.js",
+    "./index.js": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "skills",
+    "agents",
+    "docs",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.1-rc.2 <0.3.0"
+  },
+  "scripts": {
+    "test": "node --test test/plugin.test.js"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
