@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(git -C "$(dirname "${BASH_SOURCE[0]}")" rev-parse --show-toplevel)"
+# Package generation drift, docs references, and DSH plugin tests. A live DSH session is separate acceptance.
+node scripts/generate-pstack-harness-trees.mjs --check
+node scripts/check-pstack-docs.mjs
+node --test harness/pstack/dsh/test/plugin.test.js
