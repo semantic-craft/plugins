@@ -6,3 +6,4 @@ Start with [README.md](README.md) for the source, generated package, and validat
 - The DSH package is `harness/pstack/dsh/`. Its README owns installation, profile selection, and runtime requirements.
 - A sparse checkout may hide unrelated upstream plugins. Preserve the complete Git history and upstream sources.
 - Before implementation or validation, read [lessons.md](lessons.md). Tests prove packaging and registration behavior; a live DSH session is separate acceptance.
+- 验证：`check`（运行 `scripts/check`：README 的三条校验命令）。
