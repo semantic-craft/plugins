@@ -8,6 +8,7 @@
 - 起因与后果：2026-10-18 只检出 pstack、scripts、harness 后，文档检查器无法识别上游文档引用的 `/deslop`，报告四处错误。
 - 修复与证据：稀疏集合保留 `cursor-team-kit/skills/deslop/` 参考源码后，`node scripts/check-pstack-docs.mjs` 通过；未安装或启用 cursor-team-kit 插件。
 - 正确做法：根 README 的稀疏检出命令包含该检查依赖；生成检查、文档检查在实际精简目录中执行。
+- 验证点：`rg -n 'sparse-checkout set .*cursor-team-kit/skills/deslop' README.md` 有结果；按这条命令精简后的工作树里 `node scripts/check-pstack-docs.mjs` 通过。
 - 复发记录：Seen 1x (2026-10-18)。
 
 ## 记录模板
@@ -24,5 +25,6 @@
 - 起因与后果：<触发条件、原因、用户可感知的影响；关联 issue 或引入提交，未知则写待核实。>
 - 修复与证据：<修复提交或 PR、回归检查与实际验收证据；区分已验证和未验证的部分。>
 - 正确做法（Done right）：<下次的具体做法；链接到防复发代码、检查或所属规范。>
+- 验证点：<写明之后怎么核对这条已改到位（看哪个文件、跑什么命令、查什么结果）。>
 - 复发记录：Seen <N>x (<YYYY-MM-DD, ...>)；<每次独立发生的证据；修复提交数与重试次数不计入。>
 ```
